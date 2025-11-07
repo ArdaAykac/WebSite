@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Olympic Juice</title>
+  <style>
+    :root {
+      --primary: #6a1b9a;
+      --light: #f3e5f5;
+      --dark: #4a148c;
+      --accent: #ff6d00;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: var(--light);
+      color: #000;
+      line-height: 1.6;
+    }
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      padding: 1rem 0;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+    nav {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem;
+    }
+    .logo img { height: 50px; }
+    .menu {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .menu a {
+      text-decoration: none; color: #000; font-weight: 600;
+      transition: color 0.3s;
+    }
+    .menu a:hover { color: var(--primary); }
+
+    .hero {
+      height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center; padding: 0 2rem;
+      background: linear-gradient(135deg, #e1bee7, #f3e5f5);
+    }
+    .hero img.hero-cup { max-width: 320px; margin: 2rem 0; border-radius: 20px; }
+    .hero h1 { font-size: 3.5rem; color: var(--dark); margin: 1rem 0; }
+    .hero p { max-width: 600px; font-size: 1.2rem; color: #444; }
+
+    section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    h2 { text-align: center; color: var(--dark); margin-bottom: 3rem; font-size: 2.5rem; }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .menu-item {
+      background: white; border-radius: 16px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .menu-item:hover { transform: translateY(-10px); }
+    .menu-item img { width: 100%; height: 180px; object-fit: cover; }
+    .item-info { padding: 1.5rem; text-align: center; }
+    .item-info h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.3rem; }
+    .item-info p { font-size: 0.9rem; color: #666; margin: 0.5rem 0; }
+    .price { font-weight: bold; color: var(--accent); font-size: 1.4rem; }
+
+    .addons {
+      display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;
+      padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 12px;
+    }
+    .addon {
+      display: flex; flex-direction: column; align-items: center;
+      font-size: 0.95rem; font-weight: 600; color: var(--dark);
+    }
+    .addon img { width: 40px; height: 40px; margin-bottom: 0.5rem; object-fit: contain; }
+
+    .locations ul {
+      display: flex; justify-content: center; gap: 2.5rem; list-style: none; flex-wrap: wrap;
+      font-size: 1.2rem; font-weight: 600;
+    }
+    .locations a { color: var(--dark); text-decoration: none; transition: 0.3s; }
+    .locations a:hover { color: var(--primary); }
+
+    /* YENİ: İLETİŞİM BÖLÜMÜ */
+    .contact {
+      background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .contact h2 { margin-bottom: 2rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; font-size: 1.1rem; color: #444; }
+    .contact-info a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .social-links {
+      display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem;
+    }
+    .social-links a img { width: 40px; height: 40px; transition: transform 0.3s; }
+    .social-links a:hover img { transform: scale(1.2); }
+
+    footer {
+      background: var(--dark); color: white; text-align: center; padding: 2rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .menu { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero img.hero-cup { max-width: 250px; }
+      h2 { font-size: 2rem; }
+      .contact-info { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">
+        <img id="logo-img" src="" alt="Logo">
+      </div>
+      <ul class="menu">
+        <li><a href="#home">Anasayfa</a></li>
+        <li><a href="#menu">Menü</a></li>
+        <li><a href="#locations">Lokasyonlar</a></li>
+        <li><a href="#contact">İletişim</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <img id="hero-cup" class="hero-cup" src="" alt="Hero">
+    <h1 id="brand-name"></h1>
+    <p>Taze sıkılmış meyve suları, enerji dolu karışımlar.</p>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <h2 id="menu-title"></h2>
+    <div class="menu-grid" id="menu-container"></div>
+    <div class="addons" id="addons-container"></div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section id="locations" class="locations">
+    <h2>ŞUBELER</h2>
+    <ul id="locations-list"></ul>
+  </section>
+
+  <!-- YENİ: İLETİŞİM -->
+  <section id="contact" class="contact">
+    <h2 id="contact-title"></h2>
+    <div class="contact-info" id="contact-info"></div>
+    <div class="social-links" id="social-links"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; <span id="year"></span> Olympic Juice.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    fetch('settings.json')
+      .then(r => {
+        if (!r.ok) throw new Error("JSON yüklenemedi: " + r.status);
+        return r.json();
+      })
+      .then(data => {
+        console.log("JSON BAŞARILI:", data);
+
+     
+        document.getElementById('logo-img').src = data.logo;
+        document.getElementById('hero-cup').src = data.hero_image;
+        document.getElementById('brand-name').textContent = data.brand_name;
+        document.getElementById('menu-title').textContent = data.menu_title;
+
+        
+        const menu = document.getElementById('menu-container');
+        menu.innerHTML = '';
+        data.items.forEach(i => {
+          menu.innerHTML += `
+            <div class="menu-item">
+              <img src="${i.item_image}" alt="${i.item_name}" onerror="this.src='images/placeholder.png'">
+              <div class="item-info">
+                <h3>${i.item_name}</h3>
+                <p>${i.ingredients || ''}</p>
+                <div class="price">${i.fiyat.toFixed(2)} ${i.para_birimi}</div>
+              </div>
+            </div>`;
+        });
+
+        
+        const addons = document.getElementById('addons-container');
+        addons.innerHTML = '';
+        data.addons.forEach(a => {
+          addons.innerHTML += `
+            <div class="addon">
+              <img src="${a.icon}" alt="${a.name}" onerror="this.src='images/addons/placeholder.png'">
+              <span>${a.name}</span>
+            </div>`;
+        });
+
+        
+        const locs = document.getElementById('locations-list');
+        locs.innerHTML = '';
+        data.locations.forEach(l => {
+          locs.innerHTML += `<li><a href="#">${l} [wave]</a></li>`;
+        });
+
+        
+        document.getElementById('contact-title').textContent = data.contact.title;
+        const info = document.getElementById('contact-info');
+        info.innerHTML = `
+          <div><strong>Telefon:</strong> <a href="tel:${data.contact.phone}">${data.contact.phone}</a></div>
+          <div><strong>E-posta:</strong> <a href="mailto:${data.contact.email}">${data.contact.email}</a></div>
+          <div><strong>Adres:</strong> ${data.contact.address}</div>
+        `;
+
+        const social = document.getElementById('social-links');
+        social.innerHTML = '';
+        data.contact.social.forEach(s => {
+          social.innerHTML += `<a href="${s.url}" target="_blank"><img src="${s.icon}" alt="${s.name}"></a>`;
+        });
+
+        // Yıl
+        document.getElementById('year').textContent = new Date().getFullYear();
+      })
+      .catch(err => {
+        console.error("HATA:", err);
+        document.body.innerHTML = `
+          <h1 style="color:red; text-align:center; margin-top:100px;">JSON YÜKLENEMEDİ!</h1>
+          <p style="text-align:center;">
+            <strong>ÇÖZÜM:</strong><br>
+            <code style="background:#eee; padding:10px;">cd /home/arda/Masaüstü/website && python3 -m http.server 8000</code><br><br>
+            <a href="http://localhost:8000">http://localhost:8000</a>
+          </p>`;
+      });
+
+    
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

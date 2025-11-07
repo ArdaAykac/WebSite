@@ -1,0 +1,36 @@
+{
+  "logo": "images/1.png",
+  "brand_name": "Olympic Juice",
+  "hero_image": "images/2.png",
+  "locations": ["Beşiktaş", "Kadıköy", "Şişli"],
+  "menu_title": "İmza Karışım Bardakları",
+  "contact": {
+    "title": "Bize Ulaşın",
+    "phone": "+90 555 123 45 67",
+    "email": "info@olympicjuice.com",
+    "address": "Beşiktaş, İstanbul",
+    "social": [
+      { "name": "Instagram", "url": "https://instagram.com/olympicjuice", "icon": "images/instagram.png" },
+      { "name": "X (Twitter)", "url": "https://x.com/olympicjuice", "icon": "images/X.png" }
+    ]
+  },
+  "items": [
+    {
+      "item_name": "Portakal Suyu",
+      "item_image": "images/portakalsuyu.png",
+      "ingredients": "Taze sıkılmış portakal",
+      "fiyat": 85.00,
+      "para_birimi": "TL"
+    },
+    {
+      "item_name": "Limonata",
+      "item_image": "images/limonata.png",
+      "ingredients": "Limon, nane, bal",
+      "fiyat": 90.00,
+      "para_birimi": "TL"
+    }
+  ],
+  "addons": [
+    { "name": "Protein", "icon": "images/addons/protein.png" }
+  ]
+}
