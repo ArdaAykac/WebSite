@@ -2,7 +2,11 @@
   "logo": "images/newmarka.png",
   "brand_name": "Bazaar Juice",
   "hero_image": "images/newmarka.png",
-  "locations": ["Beşiktaş", "Kadıköy", "Şişli"],
+  "locations": [
+    "Beşiktaş",
+    "Kadıköy",
+    "Şişli"
+  ],
   "menu_title": "İmza Karışım Bardakları",
   "contact": {
     "title": "Bize Ulaşın",
@@ -10,8 +14,16 @@
     "email": "info@olympicjuice.com",
     "address": "Beşiktaş, İstanbul",
     "social": [
-      { "name": "Instagram", "url": "https://instagram.com/olympicjuice", "icon": "images/instagram.png" },
-      { "name": "X (Twitter)", "url": "https://x.com/olympicjuice", "icon": "images/X.png" }
+      {
+        "name": "Instagram",
+        "url": "https://instagram.com/olympicjuice",
+        "icon": "images/instagram.png"
+      },
+      {
+        "name": "X (Twitter)",
+        "url": "https://x.com/olympicjuice",
+        "icon": "images/X.png"
+      }
     ]
   },
   "items": [
@@ -19,18 +31,21 @@
       "item_name": "Portakal Suyu",
       "item_image": "images/portakalsuyu.png",
       "ingredients": "Taze sıkılmış portakal",
-      "fiyat": 85.00,
+      "fiyat": 102,
       "para_birimi": "TL"
     },
     {
       "item_name": "Limonata",
       "item_image": "images/limonata.png",
       "ingredients": "Limon, nane, bal",
-      "fiyat": 90.00,
+      "fiyat": 90,
       "para_birimi": "TL"
     }
   ],
   "addons": [
-    { "name": "Protein", "icon": "images/addons/protein.png" }
+    {
+      "name": "Protein",
+      "icon": "images/addons/protein.png"
+    }
   ]
 }
