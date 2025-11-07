@@ -40,11 +40,22 @@
       "ingredients": "Limon, nane, bal",
       "fiyat": 90,
       "para_birimi": "TL"
+    },
+    {
+      "item_name": "PremiumWater",
+      "item_image": "images/portakalsuyu.png",
+      "ingredients": "Limon, nane, bal",
+      "fiyat": 206,
+      "para_birimi": "TL"
     }
   ],
   "addons": [
     {
       "name": "Protein",
+      "icon": "images/addons/protein.png"
+    },
+    {
+      "name": "Kol",
       "icon": "images/addons/protein.png"
     }
   ]
