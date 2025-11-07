@@ -4,117 +4,104 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bazaar Juice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #6a1b9a;
-      --light: #f3e5f5;
-      --dark: #4a148c;
-      --accent: #ff6d00;
+      --primary: #6a1b9a; --light: #f3e5f5; --dark: #4a148c; --accent: #ff6d00;
+      --secondary: #e91e63; --text-dark: #222; --text-light: #666; --white: #fff;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: var(--light);
-      color: #000;
-      line-height: 1.6;
+      font-family: 'Poppins', sans-serif; background: var(--light); color: var(--text-dark);
+      line-height: 1.6; overflow-x: hidden;
     }
     header {
-      position: fixed;
-      top: 0; width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      z-index: 1000;
-      padding: 1rem 0;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px); z-index: 1000; padding: 1rem 0;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1); transition: all 0.3s;
     }
+    header.scrolled { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
     nav {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem;
+      max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 2rem;
     }
-    .logo img { height: 50px; }
-    .menu {
-      display: flex; gap: 2rem; list-style: none;
-    }
-    .menu a {
-      text-decoration: none; color: #000; font-weight: 600;
-      transition: color 0.3s;
-    }
-    .menu a:hover { color: var(--primary); }
+    .logo img { height: 50px; transition: transform 0.3s; }
+    .logo img:hover { transform: rotate(8deg) scale(1.1); }
+    .menu { display: flex; gap: 2rem; list-style: none; }
+    .menu a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+    .menu a:hover { color: var(--primary); transform: translateY(-3px); }
 
     .hero {
-      height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center; padding: 0 2rem;
-      background: linear-gradient(135deg, #e1bee7, #f3e5f5);
+      height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      align-items: center; text-align: center; padding: 0 2rem;
+      background: linear-gradient(135deg, #e1bee7, #f3e5f5); animation: fadeIn 1.5s;
     }
-    .hero img.hero-cup { max-width: 320px; margin: 2rem 0; border-radius: 20px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    .hero img.hero-cup { max-width: 320px; margin: 2rem 0; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); animation: zoomIn 1s; }
+    @keyframes zoomIn { from { transform: scale(0.7); } to { transform: scale(1); } }
     .hero h1 { font-size: 3.5rem; color: var(--dark); margin: 1rem 0; }
-    .hero p { max-width: 600px; font-size: 1.2rem; color: #444; }
+    .hero p { max-width: 600px; font-size: 1.2rem; color: var(--text-light); }
 
     section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-    h2 { text-align: center; color: var(--dark); margin-bottom: 3rem; font-size: 2.5rem; }
+    h2 { text-align: center; color: var(--dark); margin-bottom: 3rem; font-size: 2.5rem; position: relative; }
+    h2::after { content: ''; width: 60px; height: 4px; background: var(--accent); position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
     .menu-item {
-      background: white; border-radius: 16px;
-      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      transition: all 0.4s; cursor: pointer;
     }
-    .menu-item:hover { transform: translateY(-10px); }
-    .menu-item img { width: 100%; height: 180px; object-fit: cover; }
+    .menu-item:hover { transform: translateY(-12px); box-shadow: 0 15px 40px rgba(0,0,0,0.22); }
+    .menu-item img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.6s; }
+    .menu-item:hover img { transform: scale(1.08); }
     .item-info { padding: 1.5rem; text-align: center; }
-    .item-info h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.3rem; }
-    .item-info p { font-size: 0.9rem; color: #666; margin: 0.5rem 0; }
+    .item-info h3 { color: var(--primary); font-size: 1.3rem; }
+    .item-info p { font-size: 0.9rem; color: var(--text-light); }
     .price { font-weight: bold; color: var(--accent); font-size: 1.4rem; }
 
-    .addons {
-      display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;
-      padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 12px;
-    }
-    .addon {
-      display: flex; flex-direction: column; align-items: center;
-      font-size: 0.95rem; font-weight: 600; color: var(--dark);
-    }
-    .addon img { width: 40px; height: 40px; margin-bottom: 0.5rem; object-fit: contain; }
+    .addons { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.7); border-radius: 12px; }
+    .addon { display: flex; flex-direction: column; align-items: center; font-weight: 600; transition: all 0.3s; }
+    .addon:hover { transform: scale(1.15) rotate(5deg); }
 
-    .locations ul {
-      display: flex; justify-content: center; gap: 2.5rem; list-style: none; flex-wrap: wrap;
-      font-size: 1.2rem; font-weight: 600;
-    }
+    .locations ul { display: flex; justify-content: center; gap: 2.5rem; list-style: none; flex-wrap: wrap; font-size: 1.2rem; font-weight: 600; }
     .locations a { color: var(--dark); text-decoration: none; transition: 0.3s; }
     .locations a:hover { color: var(--primary); }
 
-    /* YENİ: İLETİŞİM BÖLÜMÜ */
-    .contact {
-      background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .contact h2 { margin-bottom: 2rem; }
-    .contact-info { display: flex; flex-direction: column; gap: 1rem; font-size: 1.1rem; color: #444; }
+    .contact { background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 6px 25px rgba(0,0,0,0.12); text-align: center; }
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; font-size: 1.1rem; }
     .contact-info a { color: var(--primary); text-decoration: none; font-weight: 600; }
-    .social-links {
-      display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem;
-    }
-    .social-links a img { width: 40px; height: 40px; transition: transform 0.3s; }
-    .social-links a:hover img { transform: scale(1.2); }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+    .social-links a img { width: 40px; height: 40px; transition: all 0.3s; }
+    .social-links a:hover img { transform: scale(1.3) rotate(10deg); }
 
-    footer {
-      background: var(--dark); color: white; text-align: center; padding: 2rem;
-      font-size: 0.9rem;
-    }
+    footer { background: var(--dark); color: white; text-align: center; padding: 2rem; font-size: 0.9rem; }
 
+    /* ADMIN PANEL */
+    #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto; padding: 2rem; }
+    .admin-content { background: white; margin: 2rem auto; max-width: 800px; padding: 2rem; border-radius: 16px; }
+    .admin-content h2 { color: var(--primary); }
+    .form-group { margin: 1rem 0; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 8px; }
+    .btn { background: var(--primary); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; margin: 0.5rem 0; }
+    .btn:hover { background: var(--secondary); }
+    .btn-danger { background: #e74c3c; }
+    .item-card { border: 1px solid #eee; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+    /* MOBİL */
     @media (max-width: 768px) {
-      .menu { display: none; }
+      .hamburger { display: block; cursor: pointer; font-size: 1.8rem; color: var(--dark); }
+      .menu { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: white; padding: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+      .menu.active { display: flex; }
       .hero h1 { font-size: 2.5rem; }
       .hero img.hero-cup { max-width: 250px; }
-      h2 { font-size: 2rem; }
-      .contact-info { font-size: 1rem; }
+      .item-card { flex-direction: column; }
     }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 2rem; border-radius: 16px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -122,9 +109,8 @@
   <!-- HEADER -->
   <header>
     <nav>
-      <div class="logo">
-        <img id="logo-img" src="" alt="Logo">
-      </div>
+      <div class="logo"><img id="logo-img" src="" alt="Logo"></div>
+      <span class="hamburger" onclick="toggleMenu()">Menu</span>
       <ul class="menu">
         <li><a href="#home">Anasayfa</a></li>
         <li><a href="#menu">Menü</a></li>
@@ -154,103 +140,375 @@
     <ul id="locations-list"></ul>
   </section>
 
-  <!-- YENİ: İLETİŞİM -->
+  <!-- CONTACT -->
   <section id="contact" class="contact">
     <h2 id="contact-title"></h2>
     <div class="contact-info" id="contact-info"></div>
     <div class="social-links" id="social-links"></div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    <p>&copy; <span id="year"></span> Olympic Juice.</p>
+    <p>&copy; <span id="year"></span> Bazaar Juice.</p>
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- ADMIN PANEL (#adminpanel) -->
+  <div id="admin-panel">
+    <div class="admin-content">
+      <h2>Admin Paneli</h2>
+      <button class="btn" onclick="saveJson()">JSON İndir</button>
+      <button class="btn" onclick="location.reload()">Yenile</button>
+      <hr>
+
+      <!-- GitHub Push -->
+      <h3>GitHub Push (Otomatik)</h3>
+      <div class="form-group">
+        <label>GitHub Token (PAT)</label>
+        <input id="github-token" type="password" placeholder="ghp_abc123...">
+        <button class="btn" onclick="rememberToken()">Hatırla</button>
+        <button class="btn btn-danger" onclick="forgetToken()">Unut</button>
+      </div>
+      <div class="form-group">
+        <label>Repo Sahibi</label>
+        <input id="github-owner" type="text" placeholder="kullanıcıadın">
+      </div>
+      <div class="form-group">
+        <label>Repo Adı</label>
+        <input id="github-repo" type="text" placeholder="repo-adı">
+      </div>
+      <div class="form-group">
+        <label>Branch</label>
+        <input id="github-branch" type="text" value="main">
+      </div>
+
+      <h3>Marka & Görseller</h3>
+      <div class="form-group"><label>Marka Adı</label><input id="admin-brand" type="text"></div>
+      <div class="form-group"><label>Logo (URL)</label><input id="admin-logo" type="url"></div>
+      <div class="form-group"><label>Hero Resim (URL)</label><input id="admin-hero" type="url"></div>
+      <div class="form-group"><label>Menü Başlığı</label><input id="admin-menutitle" type="text"></div>
+
+      <h3>Lokasyonlar</h3>
+      <div id="admin-locations"></div>
+      <button class="btn" onclick="addLocation()">+ Lokasyon Ekle</button>
+
+      <h3>İletişim</h3>
+      <div class="form-group"><label>Başlık</label><input id="admin-contact-title" type="text"></div>
+      <div class="form-group"><label>Telefon</label><input id="admin-contact-phone" type="tel"></div>
+      <div class="form-group"><label>E-posta</label><input id="admin-contact-email" type="email"></div>
+      <div class="form-group"><label>Adres</label><input id="admin-contact-address" type="text"></div>
+
+      <h3>Sosyal Medya</h3>
+      <div id="admin-social"></div>
+      <button class="btn" onclick="addSocial()">+ Sosyal Medya Ekle</button>
+
+      <h3>Ürünler</h3>
+      <div id="admin-items"></div>
+      <button class="btn" onclick="addItem()">+ Ürün Ekle</button>
+
+      <h3>Addons</h3>
+      <div id="admin-addons"></div>
+      <button class="btn" onclick="addAddon()">+ Addon Ekle</button>
+
+      <hr>
+      <button class="btn" onclick="saveAll(false)">Kaydet (Sadece JSON)</button>
+      <button class="btn" onclick="saveAll(true)">Kaydet & GitHub Push</button>
+      <button class="btn btn-danger" onclick="closeAdmin()">Kapat</button>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">X</span>
+      <img id="modal-img" src="" alt="">
+      <h3 id="modal-name"></h3>
+      <p id="modal-ingredients"></p>
+      <div class="price" id="modal-price"></div>
+    </div>
+  </div>
+
   <script>
-    fetch('settings.json')
-      .then(r => {
-        if (!r.ok) throw new Error("JSON yüklenemedi: " + r.status);
-        return r.json();
-      })
-      .then(data => {
-        console.log("JSON BAŞARILI:", data);
+    let data = {};
+    let lastJson = '';
 
-     
-        document.getElementById('logo-img').src = data.logo;
-        document.getElementById('hero-cup').src = data.hero_image;
-        document.getElementById('brand-name').textContent = data.brand_name;
-        document.getElementById('menu-title').textContent = data.menu_title;
-
-        
-        const menu = document.getElementById('menu-container');
-        menu.innerHTML = '';
-        data.items.forEach(i => {
-          menu.innerHTML += `
-            <div class="menu-item">
-              <img src="${i.item_image}" alt="${i.item_name}" onerror="this.src='images/placeholder.png'">
-              <div class="item-info">
-                <h3>${i.item_name}</h3>
-                <p>${i.ingredients || ''}</p>
-                <div class="price">${i.fiyat.toFixed(2)} ${i.para_birimi}</div>
-              </div>
-            </div>`;
+    // JSON Yükle
+    function loadData() {
+      fetch('settings.json?' + Date.now())
+        .then(r => r.ok ? r.json() : getDefaultData())
+        .then(d => {
+          data = d;
+          lastJson = JSON.stringify(data, null, 2);
+          renderSite();
+          if (location.hash === '#adminpanel') openAdmin();
+        })
+        .catch(() => {
+          data = getDefaultData();
+          renderSite();
         });
+    }
 
-        
-        const addons = document.getElementById('addons-container');
-        addons.innerHTML = '';
-        data.addons.forEach(a => {
-          addons.innerHTML += `
-            <div class="addon">
-              <img src="${a.icon}" alt="${a.name}" onerror="this.src='images/addons/placeholder.png'">
-              <span>${a.name}</span>
-            </div>`;
-        });
+    function getDefaultData() {
+      return {
+        logo: "images/logo.png",
+        brand_name: "Bazaar Juice",
+        hero_image: "images/hero-cup.png",
+        menu_title: "İmza Karışım Bardakları",
+        locations: ["Beşiktaş", "Kadıköy"],
+        contact: { title: "Bize Ulaşın", phone: "+90 555", email: "info@...", address: "İstanbul", social: [] },
+        items: [],
+        addons: []
+      };
+    }
 
-        
-        const locs = document.getElementById('locations-list');
-        locs.innerHTML = '';
-        data.locations.forEach(l => {
-          locs.innerHTML += `<li><a href="#">${l} [wave]</a></li>`;
-        });
+    function renderSite() {
+      document.getElementById('logo-img').src = data.logo || '';
+      document.getElementById('hero-cup').src = data.hero_image || '';
+      document.getElementById('brand-name').textContent = data.brand_name || '';
+      document.getElementById('menu-title').textContent = data.menu_title || '';
 
-        
-        document.getElementById('contact-title').textContent = data.contact.title;
-        const info = document.getElementById('contact-info');
-        info.innerHTML = `
-          <div><strong>Telefon:</strong> <a href="tel:${data.contact.phone}">${data.contact.phone}</a></div>
-          <div><strong>E-posta:</strong> <a href="mailto:${data.contact.email}">${data.contact.email}</a></div>
-          <div><strong>Adres:</strong> ${data.contact.address}</div>
-        `;
-
-        const social = document.getElementById('social-links');
-        social.innerHTML = '';
-        data.contact.social.forEach(s => {
-          social.innerHTML += `<a href="${s.url}" target="_blank"><img src="${s.icon}" alt="${s.name}"></a>`;
-        });
-
-        // Yıl
-        document.getElementById('year').textContent = new Date().getFullYear();
-      })
-      .catch(err => {
-        console.error("HATA:", err);
-        document.body.innerHTML = `
-          <h1 style="color:red; text-align:center; margin-top:100px;">JSON YÜKLENEMEDİ!</h1>
-          <p style="text-align:center;">
-            <strong>ÇÖZÜM:</strong><br>
-            <code style="background:#eee; padding:10px;">cd /home/arda/Masaüstü/website && python3 -m http.server 8000</code><br><br>
-            <a href="http://localhost:8000">http://localhost:8000</a>
-          </p>`;
+      const menu = document.getElementById('menu-container');
+      menu.innerHTML = '';
+      (data.items || []).forEach(i => {
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+        div.innerHTML = `<img src="${i.item_image}" onerror="this.src='images/placeholder.png'"><div class="item-info"><h3>${i.item_name}</h3><p>${i.ingredients || ''}</p><div class="price">${i.fiyat?.toFixed(2)} ${i.para_birimi}</div></div>`;
+        div.onclick = () => openModal(i);
+        menu.appendChild(div);
       });
 
-    
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+      const addons = document.getElementById('addons-container');
+      addons.innerHTML = '';
+      (data.addons || []).forEach(a => {
+        addons.innerHTML += `<div class="addon"><img src="${a.icon}" onerror="this.src='images/addons/placeholder.png'"><span>${a.name}</span></div>`;
       });
+
+      const locs = document.getElementById('locations-list');
+      locs.innerHTML = '';
+      (data.locations || []).forEach(l => locs.innerHTML += `<li><a href="#">${l}</a></li>`);
+
+      document.getElementById('contact-title').textContent = data.contact?.title || '';
+      const info = document.getElementById('contact-info');
+      info.innerHTML = `
+        <div><strong>Telefon:</strong> <a href="tel:${data.contact?.phone}">${data.contact?.phone}</a></div>
+        <div><strong>E-posta:</strong> <a href="mailto:${data.contact?.email}">${data.contact?.email}</a></div>
+        <div><strong>Adres:</strong> ${data.contact?.address}</div>
+      `;
+
+      const social = document.getElementById('social-links');
+      social.innerHTML = '';
+      (data.contact?.social || []).forEach(s => {
+        social.innerHTML += `<a href="${s.url}" target="_blank"><img src="${s.icon}" alt="${s.name}"></a>`;
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+    }
+
+    // Admin Panel
+    function openAdmin() {
+      document.getElementById('admin-panel').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      fillAdminForm();
+    }
+    function closeAdmin() {
+      document.getElementById('admin-panel').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      history.pushState('', '', location.pathname);
+    }
+
+    function fillAdminForm() {
+      document.getElementById('admin-brand').value = data.brand_name || '';
+      document.getElementById('admin-logo').value = data.logo || '';
+      document.getElementById('admin-hero').value = data.hero_image || '';
+      document.getElementById('admin-menutitle').value = data.menu_title || '';
+      document.getElementById('admin-contact-title').value = data.contact?.title || '';
+      document.getElementById('admin-contact-phone').value = data.contact?.phone || '';
+      document.getElementById('admin-contact-email').value = data.contact?.email || '';
+      document.getElementById('admin-contact-address').value = data.contact?.address || '';
+
+      // Token hatırla
+      const savedToken = localStorage.getItem('github_token');
+      if (savedToken) document.getElementById('github-token').value = savedToken;
+
+      const locDiv = document.getElementById('admin-locations');
+      locDiv.innerHTML = '';
+      (data.locations || []).forEach((l, i) => {
+        locDiv.innerHTML += `<div class="item-card"><input value="${l}" onchange="data.locations[${i}]=this.value"> <button class="btn btn-danger" onclick="data.locations.splice(${i},1); fillAdminForm()">Sil</button></div>`;
+      });
+
+      const socialDiv = document.getElementById('admin-social');
+      socialDiv.innerHTML = '';
+      (data.contact?.social || []).forEach((s, i) => {
+        socialDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Ad" value="${s.name}" onchange="data.contact.social[${i}].name=this.value">
+          <input placeholder="URL" value="${s.url}" onchange="data.contact.social[${i}].url=this.value">
+          <input placeholder="İkon" value="${s.icon}" onchange="data.contact.social[${i}].icon=this.value">
+          <button class="btn btn-danger" onclick="data.contact.social.splice(${i},1); fillAdminForm()">Sil</button>
+        </div>`;
+      });
+
+      const itemsDiv = document.getElementById('admin-items');
+      itemsDiv.innerHTML = '';
+      (data.items || []).forEach((item, i) => {
+        itemsDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Ürün" value="${item.item_name}" onchange="data.items[${i}].item_name=this.value">
+          <input placeholder="Resim" value="${item.item_image}" onchange="data.items[${i}].item_image=this.value">
+          <input placeholder="Malzeme" value="${item.ingredients}" onchange="data.items[${i}].ingredients=this.value">
+          <input placeholder="Fiyat" value="${item.fiyat}" onchange="data.items[${i}].fiyat=parseFloat(this.value)||0">
+          <input placeholder="TL" value="${item.para_birimi}" onchange="data.items[${i}].para_birimi=this.value">
+          <button class="btn btn-danger" onclick="data.items.splice(${i},1); fillAdminForm()">Sil</button>
+        </div>`;
+      });
+
+      const addonsDiv = document.getElementById('admin-addons');
+      addonsDiv.innerHTML = '';
+      (data.addons || []).forEach((a, i) => {
+        addonsDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Ad" value="${a.name}" onchange="data.addons[${i}].name=this.value">
+          <input placeholder="İkon" value="${a.icon}" onchange="data.addons[${i}].icon=this.value">
+          <button class="btn btn-danger" onclick="data.addons.splice(${i},1); fillAdminForm()">Sil</button>
+        </div>`;
+      });
+    }
+
+    function addLocation() { data.locations.push("Yeni Şube"); fillAdminForm(); }
+    function addSocial() { data.contact.social.push({name:"",url:"",icon:""}); fillAdminForm(); }
+    function addItem() { data.items.push({item_name:"",item_image:"",ingredients:"",fiyat:0,para_birimi:"TL"}); fillAdminForm(); }
+    function addAddon() { data.addons.push({name:"",icon:""}); fillAdminForm(); }
+
+    // Token Hatırlama
+    function rememberToken() {
+      const token = document.getElementById('github-token').value;
+      if (token) {
+        localStorage.setItem('github_token', token);
+        alert('Token hatırlandı!');
+      }
+    }
+    function forgetToken() {
+      localStorage.removeItem('github_token');
+      document.getElementById('github-token').value = '';
+      alert('Token unutuldu.');
+    }
+
+    // ANA FONKSİYON: KAYDET & PUSH
+    async function saveAll(doPush = false) {
+      data.brand_name = document.getElementById('admin-brand').value;
+      data.logo = document.getElementById('admin-logo').value;
+      data.hero_image = document.getElementById('admin-hero').value;
+      data.menu_title = document.getElementById('admin-menutitle').value;
+      if (!data.contact) data.contact = {};
+      data.contact.title = document.getElementById('admin-contact-title').value;
+      data.contact.phone = document.getElementById('admin-contact-phone').value;
+      data.contact.email = document.getElementById('admin-contact-email').value;
+      data.contact.address = document.getElementById('admin-contact-address').value;
+
+      renderSite();
+      saveJson();
+
+      if (!doPush) {
+        alert('Değişiklikler kaydedildi! JSON indirildi.');
+        return;
+      }
+
+      const token = document.getElementById('github-token').value.trim();
+      const owner = document.getElementById('github-owner').value.trim();
+      const repo = document.getElementById('github-repo').value.trim();
+      const branch = document.getElementById('github-branch').value.trim() || 'main';
+
+      if (!token || !owner || !repo) {
+        alert('Token, Owner ve Repo adını doldurun!');
+        return;
+      }
+
+      try {
+        let file = null;
+        const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/settings.json?ref=${branch}`;
+        const getRes = await fetch(getUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+
+        if (getRes.status === 404) {
+          console.log('Dosya yok → Yeni dosya oluşturulacak.');
+        } else if (getRes.status === 401) {
+          alert('Token hatalı veya süresi dolmuş!');
+          return;
+        } else if (!getRes.ok) {
+          const err = await getRes.json();
+          alert(`Hata ${getRes.status}: ${err.message}`);
+          return;
+        } else {
+          file = await getRes.json();
+        }
+
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+
+        const payload = {
+          message: file ? 'Admin panel güncellemesi' : 'Yeni settings.json oluşturuldu',
+          content: content,
+          branch: branch
+        };
+        if (file) payload.sha = file.sha;
+
+        const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/settings.json`, {
+          method: 'PUT',
+          headers: { 
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (putRes.ok) {
+          alert('Başarılı! settings.json GitHub\'a yüklendi.\nSite 1-2 dk içinde güncellenecek.');
+        } else {
+          const err = await putRes.json();
+          alert(`Push hatası ${putRes.status}: ${err.message}`);
+        }
+      } catch (err) {
+        alert('Bağlantı hatası: ' + err.message);
+      }
+    }
+
+    function saveJson() {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'settings.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Anlık Güncelleme
+    setInterval(() => {
+      fetch('settings.json?' + Date.now())
+        .then(r => r.ok ? r.json() : null)
+        .then(newData => {
+          if (newData && JSON.stringify(newData) !== lastJson) {
+            data = newData;
+            lastJson = JSON.stringify(data);
+            renderSite();
+          }
+        });
+    }, 5000);
+
+    // Modal
+    function openModal(item) {
+      document.getElementById('modal-img').src = item.item_image;
+      document.getElementById('modal-name').textContent = item.item_name;
+      document.getElementById('modal-ingredients').textContent = item.ingredients || '';
+      document.getElementById('modal-price').textContent = `${item.fiyat?.toFixed(2)} ${item.para_birimi}`;
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    window.onclick = e => { if (e.target.className === 'modal') closeModal(); };
+
+    // Hamburger
+    function toggleMenu() { document.querySelector('.menu').classList.toggle('active'); }
+
+    // Başlat
+    loadData();
+    window.addEventListener('hashchange', () => {
+      if (location.hash === '#adminpanel') openAdmin();
+      else closeAdmin();
     });
   </script>
 </body>
