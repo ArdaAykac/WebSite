@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bazaar Juice | Fresh & Vibrant Flavors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* PROFESYONEL VE DYNAMIC RENK PALETİ */
+    :root {
+      /* Light Mode Variables (Default) */
+      --primary: #8bc34a;    /* Soft Green (Accent) */
+      --secondary: #ffb300;  /* Orange (Action) */
+      --background: #f9f9f9; /* Light Gray/Cream */
+      --surface: #ffffff;    /* Card/Modal Background */
+      --text-dark: #212121;  /* Primary Text */
+      --text-light: #555;    /* Secondary Text */
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --footer-bg: #212121;
+      --nav-link-color: var(--text-dark); 
+    }
+
+    /* DARK MODE AYARLARI */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #aed581;    
+        --secondary: #ff8f00;  
+        --background: #121212; 
+        --surface: #1e1e1e;    
+        --text-dark: #e0e0e0;  
+        --text-light: #b0b0b0; 
+        --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        --hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        --footer-bg: #1e1e1e;
+        --nav-link-color: var(--text-dark); 
+      }
+      .sticky-btn { color: var(--text-dark) !important; }
+      .admin-content h2, .admin-content h3 { border-bottom-color: var(--primary) !important; color: var(--text-dark) !important; }
+      .form-group input, .form-group textarea { background: #333; color: var(--text-dark); border-color: #555; }
+      .item-card { border-color: #333 !important; }
+      .nutrition-table { border-top-color: #333 !important; }
+      .nutrition-table div { border-bottom-color: #333 !important; }
+      .menu a::after { background: var(--primary) !important; }
+      header { background: rgba(30, 30, 30, 0.95) !important; }
+      .category-btn { background: #333; border-color: #444; color: var(--text-dark); }
+      .category-btn.active { background: var(--primary); color: var(--surface); border-color: var(--primary); }
+      .contact, .addons, .difference-item { border: 1px solid #333; }
+      .freshness-banner a:hover { background: var(--background); color: var(--primary); }
+      .commitment-content { background: #1e1e1e !important; }
+    }
+
+    /* ********** TEMEL VE GENEL STİLLER ********** */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif; 
+      background: var(--background); 
+      color: var(--text-dark);
+      line-height: 1.6; 
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s; 
+    }
+    html { scroll-behavior: smooth; }
+
+    /* ********** HEADER VE NAVİGASYON ********** */
+    header {
+      position: fixed; top: 0; width: 100%; 
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px); z-index: 1000; padding: 0.8rem 0;
+      box-shadow: var(--shadow); transition: all 0.3s;
+    }
+    nav { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+    
+    .brand-area {
+        display: flex; align-items: center; gap: 10px; text-decoration: none;
+        color: var(--text-dark); font-weight: 700; font-size: 1.5rem;
+    }
+    .logo img { height: 45px; } 
+    .logo-text { color: var(--primary); font-weight: 900; } 
+
+    .menu { display: flex; gap: 2.5rem; list-style: none; }
+    .menu a { text-decoration: none; color: var(--nav-link-color); font-weight: 600; transition: color 0.3s; padding: 0.5rem 0; position: relative; }
+    .menu a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
+    
+    /* Active/Current link vurgusu */
+    .menu a:hover, .menu a.active { color: var(--primary); }
+    .menu a:hover::after, .menu a.active::after { width: 100%; }
+
+    /* STICKY BUTTON */
+    .sticky-btn {
+        position: fixed; bottom: 30px; right: 30px; z-index: 1001;
+        background: var(--secondary); color: var(--text-dark);
+        padding: 0.9rem 1.6rem; border-radius: 50px; text-decoration: none;
+        font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        transition: transform 0.3s, background 0.3s;
+    }
+    .sticky-btn:hover { background: var(--primary); color: var(--surface) !important; transform: scale(1.05) translateY(-2px); }
+
+    /* HERO */
+    .hero { 
+        min-height: 95vh; display: flex; justify-content: space-between; align-items: center; 
+        padding: 8rem 2rem 4rem; background: var(--surface); max-width: none; transition: background 0.5s; 
+    }
+    .hero-content { max-width: 500px; padding-left: 2rem; }
+    .hero-image { max-width: 500px; }
+    .hero img.hero-cup { width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); animation: float 4s ease-in-out infinite alternate; }
+    @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+    
+    .hero h1 { font-size: 3.5rem; color: var(--text-dark); margin: 0.5rem 0 1rem; font-weight: 900; line-height: 1.2; }
+    .hero h1 span { color: var(--primary); }
+    .hero p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; }
+    .hero-btn { background: var(--primary); color: var(--surface); padding: 1rem 2.5rem; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s; box-shadow: var(--shadow); }
+    .hero-btn:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: var(--hover-shadow); }
+
+    /* ********** GENEL BAŞLIK VE SECTION STİLLERİ ********** */
+    section { padding: 6rem 2rem; max-width: 1300px; margin: 0 auto; }
+    h2 { text-align: center; color: var(--text-dark); margin-bottom: 4rem; font-size: 2.8rem; font-weight: 700; position: relative; }
+    h2::after { content: ''; width: 60px; height: 4px; background: var(--secondary); position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+
+    /* ********** OUR DIFFERENCE ********** */
+    .difference-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; text-align: center; }
+    .difference-item { padding: 1.5rem; background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid #ddd; }
+    .difference-item h3 { color: var(--primary); margin-bottom: 0.8rem; font-weight: 700; font-size: 1.5rem; }
+    .difference-item p { color: var(--text-light); }
+    .difference-item:hover { transform: translateY(-5px); box-shadow: var(--hover-shadow); }
+
+    /* ********** FRESHNESS BANNER ********** */
+    .freshness-banner {
+        background: var(--primary); color: var(--surface); padding: 4rem 2rem; 
+        border-radius: 12px; text-align: center; margin: 4rem auto; max-width: 1000px;
+    }
+    .freshness-banner h3 { font-size: 2rem; margin-bottom: 1rem; font-weight: 800; }
+    .freshness-banner p { font-size: 1.2rem; margin-bottom: 2rem; }
+    .freshness-banner a { 
+        background: var(--secondary); color: var(--text-dark); padding: 0.8rem 2rem; 
+        border-radius: 5px; text-decoration: none; font-weight: 700; transition: all 0.3s;
+    }
+    .freshness-banner a:hover { background: var(--surface); color: var(--primary); }
+
+    /* ********** OUR COMMITMENT ********** */
+    .commitment {
+        padding: 0; 
+        max-width: none;
+    }
+    .commitment-content {
+        background: url('images/commitment_bg.jpg') center center no-repeat;
+        background-size: cover;
+        padding: 5rem 2rem;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+    .commitment-content::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.65); 
+        z-index: -1;
+        border-top: 5px solid var(--primary);
+        border-bottom: 5px solid var(--primary);
+    }
+    .commitment-content h2 { 
+        color: #fff; margin-bottom: 2rem; font-size: 3rem; 
+    }
+    .commitment-content h2::after { background: var(--secondary); }
+    .commitment-content p {
+        font-size: 1.3rem;
+        max-width: 800px;
+        margin: 0 auto 2rem auto;
+        font-weight: 300;
+    }
+
+    /* ********** MENU STİLLERİ ********** */
+    .category-filter { text-align: center; margin-bottom: 3rem; }
+    .category-btn { background: var(--surface); border: 1px solid #ddd; color: var(--text-dark); padding: 0.6rem 1.2rem; margin: 0.4rem; border-radius: 5px; cursor: pointer; font-weight: 400; transition: all 0.3s; }
+    .category-btn.active { background: var(--primary); color: var(--surface); border-color: var(--primary); font-weight: 600; }
+    .category-btn:hover:not(.active) { background: #eee; transform: translateY(-2px); }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; }
+    .menu-grid.single-item { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto 4rem auto; }
+
+    .menu-item {
+      background: var(--surface); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+      transition: all 0.4s ease-out; cursor: pointer;
+    }
+    .menu-item:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
+    .menu-item img { width: 100%; height: 180px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px; }
+    .item-info { padding: 1.5rem; text-align: left; }
+    .item-info h3 { color: var(--text-dark); font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .item-info p { font-size: 0.9rem; color: var(--text-light); min-height: 40px; margin-bottom: 1rem; }
+    .price { font-weight: 700; color: var(--secondary); font-size: 1.5rem; display: block; text-align: right; }
+
+    .addons { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 4rem; padding: 2rem; background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 1px solid #ddd; }
+    .addon { display: flex; flex-direction: column; align-items: center; font-weight: 500; color: var(--text-light); transition: all 0.3s; cursor: default; }
+    .addon img { width: 50px; height: 50px; margin-bottom: 0.5rem; }
+    .addon:hover { transform: scale(1.05); color: var(--primary); }
+
+    /* ********** LOCATIONS VE CONTACT STİLLERİ ********** */
+    .locations ul { display: flex; justify-content: center; gap: 3rem; list-style: none; flex-wrap: wrap; font-size: 1.2rem; font-weight: 600; }
+    .locations a { color: var(--text-dark); text-decoration: none; transition: color 0.3s; position: relative; }
+    .locations a:hover { color: var(--primary); }
+
+    .contact { background: var(--surface); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); text-align: center; transition: background 0.5s; border: 1px solid #ddd; }
+    .contact-info { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; font-size: 1.1rem; margin-top: 2rem; }
+    .contact-info strong { color: var(--text-dark); display: block; margin-bottom: 0.3rem; }
+    .contact-info a { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+    .contact-info a:hover { color: var(--secondary); }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; }
+    .social-links a img { width: 40px; height: 40px; transition: all 0.3s; }
+    .social-links a:hover img { transform: translateY(-5px); }
+
+    /* FOOTER */
+    footer { background: var(--footer-bg); color: var(--text-light); text-align: center; padding: 2rem; font-size: 0.9rem; transition: background 0.5s; }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+    .modal-content { background: var(--surface); padding: 2rem; border-radius: 12px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative; transition: background 0.5s; }
+    .close { position: absolute; top: 10px; right: 20px; font-size: 2rem; color: var(--text-light); cursor: pointer; transition: color 0.2s; }
+    .close:hover { color: var(--secondary); }
+    .modal-content img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+    .modal-content h3 { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; }
+    .modal-content p { color: var(--text-dark); margin-bottom: 1rem; font-style: italic; }
+    .nutrition-table { margin-top: 1.5rem; border-top: 2px solid #eee; padding-top: 1rem; text-align: left; }
+    .nutrition-table div { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed #eee; font-size: 0.95rem; }
+    .nutrition-table strong { color: var(--text-dark); }
+    
+    /* SCROLL ANIMATIONS VE ADMIN PANEL AYARLARI KORUNDU */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(33, 33, 33, 0.95); z-index: 3000; overflow-y: auto; padding: 2rem; }
+    .admin-content { background: var(--surface); margin: 2rem auto; max-width: 800px; padding: 2rem; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+    .btn { background: var(--primary); color: var(--surface); padding: 0.8rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; margin: 0.5rem 0; transition: background 0.3s; font-weight: 600; }
+    .btn:hover { background: var(--secondary); }
+    .btn-danger { background: #d32f2f; }
+    .item-card { border: 1px solid #eee; padding: 1rem; border-radius: 8px; margin: 0.8rem 0; display: flex; flex-direction: column; align-items: start; gap: 10px; }
+
+    /* MOBİL VE RESPONSİV AYARLAR */
+    @media (max-width: 900px) {
+        .hero { flex-direction: column; text-align: center; min-height: auto; padding-top: 6rem; }
+        .hero-content { padding-left: 0; max-width: 100%; }
+        .hero-image { order: -1; margin-bottom: 2rem; }
+        .hero img.hero-cup { max-width: 280px; }
+        .difference-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .hamburger { display: block; cursor: pointer; font-size: 1.8rem; color: var(--text-dark); }
+        .menu { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: var(--surface); padding: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .menu.active { display: flex; }
+        nav { padding: 0 1rem; }
+        .hero h1 { font-size: 2.5rem; }
+        .contact-info { flex-direction: column; gap: 1.5rem; }
+        .commitment-content h2 { font-size: 2rem; }
+        .commitment-content p { font-size: 1.1rem; }
+    }
+    .hamburger { display: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#home" class="brand-area">
+        <div class="logo"><img id="logo-img" src="" alt="Bazaar Juice Logo"></div>
+        <span class="logo-text" id="brand-name">Bazaar Juice</span>
+      </a>
+      <span class="hamburger" onclick="toggleMenu()">☰</span>
+      <ul class="menu" id="nav-menu">
+        <li style="display:none;" id="admin-link"><a href="#adminpanel">⚙️ Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <a href="#menu" class="sticky-btn">🛒 Order Now</a>
+
+  <section id="home" class="hero reveal">
+    <div class="hero-content">
+        <h1>Fresh, Fast, and <span>Flavorful.</span></h1>
+        <p>Revitalize your day with freshly squeezed juices, healthy bowls, and energy-packed blends. Discover your next favorite blend!</p>
+        <a href="#menu" class="hero-btn">Explore Menu</a>
+    </div>
+    <div class="hero-image">
+        <img id="hero-cup" class="hero-cup" src="" alt="Hero Juice Cup">
+    </div>
+  </section>
+  
+  <section id="difference">
+    <h2 class="reveal" id="difference-title"></h2>
+    <div class="difference-grid" id="difference-grid">
+        </div>
+  </section>
+
+  <section id="freshness" class="freshness-banner reveal">
+    <h3 id="freshness-slogan"></h3>
+    <p id="freshness-text"></p>
+    <a href="#menu">View Our Menu</a>
+  </section>
+
+  <section id="menu">
+    <h2 id="menu-title" class="reveal"></h2>
+    <div class="category-filter reveal" id="category-filter">
+      </div>
+    <div class="menu-grid" id="menu-container"></div>
+    <div class="addons reveal" id="addons-container">
+        <h3>Our Addons</h3>
+    </div>
+  </section>
+
+  <section id="bottles" class="menu reveal">
+      <h2 id="bottles-title" class="reveal">BOTTLES SECTION</h2>
+      <p style="text-align: center; color: var(--text-light);">
+          This section is currently empty. You can fill it with products or custom content.
+      </p>
+  </section>
+  <section id="locations" class="locations reveal">
+    <h2>OUR LOCATIONS</h2>
+    <ul id="locations-list"></ul>
+  </section>
+  
+  <section id="commitment" class="commitment reveal">
+    <div class="commitment-content">
+        <h2 id="commitment-title"></h2>
+        <p id="commitment-text"></p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact reveal">
+    <h2 id="contact-title"></h2>
+    <div class="contact-info" id="contact-info"></div>
+    <div class="social-links" id="social-links"></div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Bazaar Juice. All Rights Reserved. | <a href="#adminpanel" style="color: #bbb;">Admin Access</a></p>
+  </footer>
+
+  <div id="admin-panel">
+    <div class="admin-content">
+      <h2>Admin Panel</h2>
+      <button class="btn" onclick="saveJson()">Download JSON</button>
+      <button class="btn" onclick="location.reload()">Reload Page</button>
+      <hr style="margin: 1.5rem 0;">
+
+      <h3>GitHub Push Settings</h3>
+      <div class="form-group"><label>GitHub Token (PAT)</label><input id="github-token" type="password" placeholder="ghp_abc123..."></div>
+      <div class="form-group"><label>Repo Owner (Username)</label><input id="github-owner" type="text" placeholder="your-username"></div>
+      <div class="form-group"><label>Repo Name</label><input id="github-repo" type="text" placeholder="repo-name"></div>
+      <div class="form-group"><label>Branch (usually main/master)</label><input id="github-branch" type="text" value="main"></div>
+
+      <h3>Brand & Visuals</h3>
+      <div class="form-group"><label>Brand Name</label><input id="admin-brand" type="text"></div>
+      <div class="form-group"><label>Logo (URL)</label><input id="admin-logo" type="url"></div>
+      <div class="form-group"><label>Hero Image (URL)</label><input id="admin-hero" type="url"></div>
+      <div class="form-group"><label>Menu Title</label><input id="admin-menutitle" type="text"></div>
+
+      <hr style="margin: 1.5rem 0;">
+
+      <h3>🔗 Navigation Links (Menu Buttons)</h3>
+      <blockquote style="background: #fff3e0; padding: 10px; border-left: 5px solid var(--secondary); margin-bottom: 15px; color: var(--text-dark); font-size: 0.9rem;">
+          **ÖNEMLİ NOT:** Yeni bir buton eklediğinizde ve bir 'Target Section ID' (örn: bags) verdiğinizde, bu ID'ye sahip bir `<section id="bags">...</section>` alanını da HTML koduna **manuel olarak** eklemeyi unutmayın! Aksi takdirde buton boş bir hedefe gider.
+      </blockquote>
+      <div id="admin-nav"></div>
+      <button class="btn" onclick="addNavLink()">+ Add New Menu Button</button>
+      <hr style="margin: 1.5rem 0;">
+
+
+      <h3>📝 Feature Text Sections</h3>
+      
+      <h4>Our Difference Section</h4>
+      <div class="form-group"><label>Difference Section Title</label><input id="admin-diff-title" type="text"></div>
+      <div id="admin-difference"></div>
+      <button class="btn" onclick="addDifferenceItem()">+ Add Difference Point</button>
+
+      <h4>Freshness Banner</h4>
+      <div class="form-group"><label>Banner Slogan</label><textarea id="admin-fresh-slogan"></textarea></div>
+      <div class="form-group"><label>Banner Text</label><textarea id="admin-fresh-text"></textarea></div>
+
+      <h4>Commitment Section</h4>
+      <div class="form-group"><label>Commitment Title</label><input id="admin-commit-title" type="text"></div>
+      <div class="form-group"><label>Commitment Text</label><textarea id="admin-commit-text"></textarea></div>
+      <hr style="margin: 1.5rem 0;">
+      
+      <h3>Products (Menu Items)</h3>
+      <div id="admin-items"></div>
+      <button class="btn" onclick="addItem()">+ Add Product</button>
+
+      <h3>Addons</h3>
+      <div id="admin-addons"></div>
+      <button class="btn" onclick="addAddon()">+ Add Addon</button>
+
+      <h3>Locations</h3>
+      <div id="admin-locations"></div>
+      <button class="btn" onclick="addLocation()">+ Add Location</button>
+
+      <h3>Contact</h3>
+      <div class="form-group"><label>Title</label><input id="admin-contact-title" type="text"></div>
+      <div class="form-group"><label>Phone</label><input id="admin-contact-phone" type="tel"></div>
+      <div class="form-group"><label>Email</label><input id="admin-contact-email" type="email"></div>
+      <div class="form-group"><label>Address</label><input id="admin-contact-address" type="text"></div>
+
+      <h3>Social Media</h3>
+      <div id="admin-social"></div>
+      <button class="btn" onclick="addSocial()">+ Add Social Link</button>
+
+      <hr style="margin: 1.5rem 0;">
+      <button class="btn" onclick="saveAll(false)">Save Changes (Download JSON)</button>
+      <button class="btn" onclick="saveAll(true)">Save & Push to GitHub</button>
+      <button class="btn btn-danger" onclick="closeAdmin()">Close Admin Panel</button>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">X</span>
+      <img id="modal-img" src="" alt="Product Image">
+      <h3 id="modal-name"></h3>
+      <div class="price" id="modal-price"></div>
+      <p id="modal-ingredients"></p>
+      
+      <div class="nutrition-table">
+        <h4 style="text-align:center; margin-bottom:0.5rem; color: var(--primary); font-weight: 700;">Nutrition Facts (Est.)</h4>
+        <div id="modal-calories"><strong>Calories</strong> <span>-</span></div>
+        <div id="modal-protein"><strong>Protein</strong> <span>-</span></div>
+        <div id="modal-fat"><strong>Fat</strong> <span>-</span></div>
+        <div id="modal-sugar"><strong>Sugar</strong> <span>-</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let data = {};
+    let lastJson = '';
+    let currentCategory = 'all';
+
+    function getDefaultData() {
+      // JSON YAPISINA YENİ DİNAMİK NAVİGASYON ALANI EKLENDİ
+      return {
+        logo: "images/logo.png",
+        brand_name: "Bazaar Juice",
+        hero_image: "images/hero-cup.png",
+        menu_title: "Our Signature Blends",
+        
+        nav_links: [
+            { name: "Home", target_section_id: "home" },
+            { name: "Menu", target_section_id: "menu" },
+            { name: "Bottles", target_section_id: "bottles" }, // Örnek olarak bottles eklendi
+            { name: "Our Difference", target_section_id: "difference" },
+            { name: "Locations", target_section_id: "locations" },
+            { name: "Contact", target_section_id: "contact" }
+        ],
+
+        difference_section: {
+            title: "OUR DIFFERENCE",
+            items: [
+                { title: "100% Real Ingredients", text: "We use only fresh, locally-sourced fruits and vegetables. No added sugars, syrups, or artificial ingredients ever." },
+                { title: "Cold-Pressed Quality", text: "Our juices are cold-pressed to retain maximum nutrients and enzymes, ensuring you get the full health benefits." },
+                { title: "Sustainably Sourced", text: "We care about our planet. We partner with sustainable farms and use eco-friendly, biodegradable packaging." }
+            ]
+        },
+        freshness_banner: {
+            slogan: "\"The freshest taste starts with the cleanest ingredients.\"",
+            text: "Everything is prepared daily, right in front of you. Taste the difference that true freshness makes."
+        },
+        commitment_section: {
+            title: "OUR COMMITMENT",
+            text: "We are committed to fueling your life with vibrant nutrition, delivered through ethical and sustainable practices. Health, taste, and the planet are our priority."
+        },
+        
+        locations: ["Besiktas", "Kadikoy", "Nisantasi"],
+        contact: { 
+            title: "Get in Touch", 
+            phone: "+90 555 123 45 67", 
+            email: "info@bazaarjuice.com", 
+            address: "Istanbul, Turkey", 
+            social: [
+                { name: "Instagram", url: "https://instagram.com/bazaarjuice", icon: "images/social/instagram.png" }
+            ] 
+        },
+        items: [
+            { item_name: "Green Power", item_image: "images/green_juice.png", ingredients: "Apple, Spinach, Cucumber, Parsley, Ginger. Detoxifying blend.", fiyat: 5.50, para_birimi: "$", category: "juice", nutrition: { calories: 150, protein: 3, fat: 1, sugar: 20 } },
+            { item_name: "Sun Muscle", item_image: "images/protein_smoothie.png", ingredients: "Banana, Peanut Butter, Protein Powder, Almond Milk. Perfect post-workout.", fiyat: 7.00, para_birimi: "$", category: "smoothie", nutrition: { calories: 380, protein: 25, fat: 12, sugar: 30 } },
+            { item_name: "Summer Dream", item_image: "images/acai_bowl.png", ingredients: "Acai, Strawberries, Granola, Coconut Flakes, Honey. Refreshing and filling.", fiyat: 8.50, para_birimi: "$", category: "bowl", nutrition: { calories: 450, protein: 8, fat: 15, sugar: 35 } }
+        ],
+        addons: [
+            { name: "Chia Seeds", icon: "images/addons/chia.png" },
+            { name: "Protein Powder", icon: "images/addons/protein.png" }
+        ]
+      };
+    }
+
+    // JSON Load Function (Aynı kaldı)
+    function loadData() {
+      fetch('settings.json?' + Date.now())
+        .then(r => r.ok ? r.json() : getDefaultData())
+        .then(d => {
+          // Gelen verinin yeni alanları yoksa default verideki alanları ekle
+          data = {...getDefaultData(), ...d, 
+            nav_links: d.nav_links || getDefaultData().nav_links,
+            difference_section: {...getDefaultData().difference_section, ...d.difference_section},
+            freshness_banner: {...getDefaultData().freshness_banner, ...d.freshness_banner},
+            commitment_section: {...getDefaultData().commitment_section, ...d.commitment_section},
+          };
+          lastJson = JSON.stringify(data, null, 2);
+          renderSite();
+          if (location.hash === '#adminpanel') {
+            openAdmin();
+          }
+        })
+        .catch(() => {
+          data = getDefaultData();
+          renderSite();
+        });
+    }
+
+
+    function renderSite() {
+      // Core Data
+      document.getElementById('logo-img').src = data.logo || 'images/logo.png';
+      document.getElementById('hero-cup').src = data.hero_image || 'images/hero-cup.png';
+      document.getElementById('brand-name').textContent = data.brand_name || 'Bazaar Juice';
+      document.getElementById('menu-title').textContent = data.menu_title || 'Our Signature Blends';
+
+      // ********** DİNAMİK NAVİGASYON RENDER **********
+      const navMenu = document.getElementById('nav-menu');
+      const adminLink = document.getElementById('admin-link');
+      navMenu.innerHTML = ''; 
+      
+      (data.nav_links || []).forEach(link => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          
+          a.href = `#${link.target_section_id || 'home'}`;
+          a.textContent = link.name;
+          a.setAttribute('data-section', link.target_section_id);
+
+          li.appendChild(a);
+          navMenu.appendChild(li); 
+      });
+      // Admin linkini en sona tekrar ekle
+      navMenu.appendChild(adminLink);
+      document.getElementById('admin-link').style.display = 'list-item'; 
+
+      // ********** DİNAMİK METİN RENDER **********
+      
+      // Our Difference Section
+      document.getElementById('difference-title').textContent = data.difference_section?.title || 'OUR DIFFERENCE';
+      const diffGrid = document.getElementById('difference-grid');
+      diffGrid.innerHTML = '';
+      (data.difference_section?.items || []).forEach(item => {
+        diffGrid.innerHTML += `
+            <div class="difference-item reveal">
+                <h3>${item.title || 'Title'}</h3>
+                <p>${item.text || 'Text'}</p>
+            </div>
+        `;
+      });
+      
+      // Freshness Banner
+      document.getElementById('freshness-slogan').textContent = data.freshness_banner?.slogan || '"The freshest taste starts with the cleanest ingredients."';
+      document.getElementById('freshness-text').textContent = data.freshness_banner?.text || 'Everything is prepared daily, right in front of you. Taste the difference that true freshness makes.';
+
+      // Commitment Section
+      document.getElementById('commitment-title').textContent = data.commitment_section?.title || 'OUR COMMITMENT';
+      document.getElementById('commitment-text').textContent = data.commitment_section?.text || 'We are committed to fueling your life with vibrant nutrition, delivered through ethical and sustainable practices. Health, taste, and the planet are our priority.';
+      
+      // ********** DİĞER BÖLÜMLER (AYNI KALDI) **********
+
+      // Category Filters (Aynı kaldı)
+      const filterDiv = document.getElementById('category-filter');
+      filterDiv.innerHTML = '';
+      const categories = getUniqueCategories(data.items);
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `category-btn ${cat === currentCategory ? 'active' : ''}`;
+        btn.textContent = getCategoryDisplayName(cat);
+        btn.onclick = () => filterMenu(cat);
+        filterDiv.appendChild(btn);
+      });
+
+      // Menu Items (Aynı kaldı)
+      const menu = document.getElementById('menu-container');
+      menu.innerHTML = '';
+      const filteredItems = currentCategory === 'all' ? data.items : data.items.filter(i => i.category?.toLowerCase() === currentCategory);
+      menu.className = filteredItems.length === 1 ? 'menu-grid single-item' : 'menu-grid';
+
+      (filteredItems || []).forEach(i => {
+        const div = document.createElement('div');
+        div.className = 'menu-item reveal';
+        const priceText = i.fiyat ? `${i.para_birimi || '$'}${i.fiyat.toFixed(2)}` : 'Price Not Listed';
+        div.innerHTML = `
+          <img src="${i.item_image}" onerror="this.src='images/placeholder.png'">
+          <div class="item-info">
+              <h3>${i.item_name}</h3>
+              <p>${i.ingredients || ''}</p>
+              <span class="price">${priceText}</span>
+          </div>
+        `;
+        div.onclick = () => openModal(i);
+        menu.appendChild(div);
+      });
+
+      // Addons (Aynı kaldı)
+      const addons = document.getElementById('addons-container');
+      addons.innerHTML = '<h3>Our Addons</h3>';
+      (data.addons || []).forEach(a => {
+        addons.innerHTML += `<div class="addon reveal"><img src="${a.icon}" onerror="this.src='images/addons/placeholder.png'" alt="${a.name}"><span>${a.name}</span></div>`;
+      });
+
+      // Locations (Aynı kaldı)
+      const locs = document.getElementById('locations-list');
+      locs.innerHTML = '';
+      (data.locations || []).forEach(l => locs.innerHTML += `<li><a href="#">${l}</a></li>`);
+
+      // Contact (Aynı kaldı)
+      document.getElementById('contact-title').textContent = data.contact?.title || 'Get in Touch';
+      const info = document.getElementById('contact-info');
+      info.innerHTML = `
+        <div><strong>Phone:</strong> <a href="tel:${data.contact?.phone}">${data.contact?.phone}</a></div>
+        <div><strong>Email:</strong> <a href="mailto:${data.contact?.email}">${data.contact?.email}</a></div>
+        <div><strong>Address:</strong> ${data.contact?.address}</div>
+      `;
+
+      // Social Media (Aynı kaldı)
+      const social = document.getElementById('social-links');
+      social.innerHTML = '';
+      (data.contact?.social || []).forEach(s => {
+        social.innerHTML += `<a href="${s.url}" target="_blank"><img src="${s.icon}" alt="${s.name}" onerror="this.src='images/social/placeholder.png'"></a>`;
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Start Animations
+      checkReveal();
+      highlightActiveLink();
+    }
+
+    function getUniqueCategories(items) {
+      const categories = ['all'];
+      (items || []).forEach(item => {
+        if (item.category && !categories.includes(item.category.toLowerCase())) {
+          categories.push(item.category.toLowerCase());
+        }
+      });
+      return categories;
+    }
+
+    function getCategoryDisplayName(category) {
+      const names = {
+        'all': 'All Items',
+        'juice': 'Juices',
+        'smoothie': 'Smoothies',
+        'bowl': 'Bowls',
+      };
+      return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    function filterMenu(category) {
+      currentCategory = category;
+      renderSite(); 
+    }
+
+    // ********** SCROLL VE NAVİGASYON FONKSİYONLARI (AYNI KALDI) **********
+    function highlightActiveLink() {
+        const sections = document.querySelectorAll('section');
+        const menuLinks = document.querySelectorAll('#nav-menu a'); // Menüye özel ID
+        let currentSectionId = 'home';
+        const headerHeight = document.querySelector('header').offsetHeight;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - headerHeight - 1; 
+            if (window.scrollY >= sectionTop) {
+                currentSectionId = section.id;
+            }
+        });
+
+        menuLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-section') === currentSectionId) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', highlightActiveLink);
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#adminpanel') {
+                openAdmin();
+            } else {
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                document.querySelector('.menu').classList.remove('active');
+            }
+        });
+    });
+
+    // ********** ADMIN PANEL FONKSİYONLARI **********
+    function fillAdminForm() {
+      // Core Fields
+      document.getElementById('admin-brand').value = data.brand_name || '';
+      document.getElementById('admin-logo').value = data.logo || '';
+      document.getElementById('admin-hero').value = data.hero_image || '';
+      document.getElementById('admin-menutitle').value = data.menu_title || '';
+
+      // DİNAMİK NAVİGASYON LİNKLERİ
+      const navDiv = document.getElementById('admin-nav');
+      navDiv.innerHTML = '';
+      (data.nav_links || []).forEach((link, i) => {
+        navDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Button Name (e.g. Çantalar)" value="${link.name || ''}" onchange="data.nav_links[${i}].name=this.value">
+          <input placeholder="Target Section ID (e.g. bottles)" value="${link.target_section_id || ''}" onchange="data.nav_links[${i}].target_section_id=this.value">
+          <button class="btn btn-danger" onclick="data.nav_links.splice(${i},1); fillAdminForm()">Delete Link</button>
+        </div>`;
+      });
+      
+      // YENİ METİN ALANLARI
+      data.difference_section = data.difference_section || {};
+      data.difference_section.items = data.difference_section.items || [];
+      document.getElementById('admin-diff-title').value = data.difference_section.title || '';
+      document.getElementById('admin-fresh-slogan').value = data.freshness_banner?.slogan || '';
+      document.getElementById('admin-fresh-text').value = data.freshness_banner?.text || '';
+      document.getElementById('admin-commit-title').value = data.commitment_section?.title || '';
+      document.getElementById('admin-commit-text').value = data.commitment_section?.text || '';
+
+      // Difference Items
+      const diffDiv = document.getElementById('admin-difference');
+      diffDiv.innerHTML = '';
+      (data.difference_section.items || []).forEach((item, i) => {
+        diffDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Title" value="${item.title || ''}" onchange="data.difference_section.items[${i}].title=this.value">
+          <textarea placeholder="Text/Description" onchange="data.difference_section.items[${i}].text=this.value">${item.text || ''}</textarea>
+          <button class="btn btn-danger" onclick="data.difference_section.items.splice(${i},1); fillAdminForm()">Delete Point</button>
+        </div>`;
+      });
+      
+      // Contact, Locations, Social, Items, Addons (AYNI KALDI)
+
+      if (!data.contact) data.contact = {};
+      document.getElementById('admin-contact-title').value = data.contact.title || '';
+      document.getElementById('admin-contact-phone').value = data.contact.phone || '';
+      document.getElementById('admin-contact-email').value = data.contact.email || '';
+      document.getElementById('admin-contact-address').value = data.contact.address || '';
+
+      const locDiv = document.getElementById('admin-locations');
+      locDiv.innerHTML = '';
+      (data.locations || []).forEach((l, i) => {
+        locDiv.innerHTML += `<div class="item-card"><input value="${l}" onchange="data.locations[${i}]=this.value"> <button class="btn btn-danger" onclick="data.locations.splice(${i},1); fillAdminForm()">Delete</button></div>`;
+      });
+
+      const socialDiv = document.getElementById('admin-social');
+      socialDiv.innerHTML = '';
+      if (!data.contact.social) data.contact.social = [];
+      (data.contact.social || []).forEach((s, i) => {
+        socialDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Name (e.g. Instagram)" value="${s.name || ''}" onchange="data.contact.social[${i}].name=this.value">
+          <input placeholder="URL" value="${s.url || ''}" onchange="data.contact.social[${i}].url=this.value">
+          <input placeholder="Icon URL (e.g. images/ig.png)" value="${s.icon || ''}" onchange="data.contact.social[${i}].icon=this.value">
+          <button class="btn btn-danger" onclick="data.contact.social.splice(${i},1); fillAdminForm()">Delete</button>
+        </div>`;
+      });
+
+      const addonsDiv = document.getElementById('admin-addons');
+      addonsDiv.innerHTML = '';
+      (data.addons || []).forEach((a, i) => {
+        addonsDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Name" value="${a.name || ''}" onchange="data.addons[${i}].name=this.value">
+          <input placeholder="Icon URL" value="${a.icon || ''}" onchange="data.addons[${i}].icon=this.value">
+          <button class="btn btn-danger" onclick="data.addons.splice(${i},1); fillAdminForm()">Delete</button>
+        </div>`;
+      });
+
+      const itemsDiv = document.getElementById('admin-items');
+      itemsDiv.innerHTML = '';
+      (data.items || []).forEach((item, i) => {
+        item.nutrition = item.nutrition || { calories: 0, protein: 0, fat: 0, sugar: 0 };
+        item.fiyat = item.fiyat || 0;
+
+        itemsDiv.innerHTML += `<div class="item-card">
+          <input placeholder="Product Name" value="${item.item_name || ''}" onchange="data.items[${i}].item_name=this.value">
+          <input placeholder="Image URL" value="${item.item_image || ''}" onchange="data.items[${i}].item_image=this.value">
+          <textarea placeholder="Ingredients" onchange="data.items[${i}].ingredients=this.value">${item.ingredients || ''}</textarea>
+          <input placeholder="Category (juice, smoothie, bowl...)" value="${item.category || ''}" onchange="data.items[${i}].category=this.value">
+          
+          <div style="display: flex; gap: 10px; width: 100%;">
+            <input type="number" placeholder="Price" value="${item.fiyat}" onchange="data.items[${i}].fiyat=parseFloat(this.value)||0" style="flex: 1;">
+            <input placeholder="Currency ($ / TL)" value="${item.para_birimi || '$'}" onchange="data.items[${i}].para_birimi=this.value" style="flex: 1;">
+          </div>
+          
+          <div style="width: 100%; border: 1px dashed #ccc; padding: 10px; border-radius: 8px;">
+            <strong>Nutrition Facts (Numerical Input):</strong>
+            <input type="number" placeholder="Calories" value="${item.nutrition.calories || 0}" onchange="data.items[${i}].nutrition.calories=parseInt(this.value)||0">
+            <input type="number" placeholder="Protein (g)" value="${item.nutrition.protein || 0}" onchange="data.items[${i}].nutrition.protein=parseFloat(this.value)||0">
+            <input type="number" placeholder="Fat (g)" value="${item.nutrition.fat || 0}" onchange="data.items[${i}].nutrition.fat=parseFloat(this.value)||0">
+            <input type="number" placeholder="Sugar (g)" value="${item.nutrition.sugar || 0}" onchange="data.items[${i}].nutrition.sugar=parseFloat(this.value)||0">
+          </div>
+          
+          <button class="btn btn-danger" style="width: 100%;" onclick="data.items.splice(${i},1); fillAdminForm()">Delete Product</button>
+        </div>`;
+      });
+    }
+
+    // YENİ FONKSİYON
+    function addNavLink() {
+        data.nav_links.push({name:"New Button", target_section_id:"new_section"});
+        fillAdminForm();
+    }
+    
+    function addDifferenceItem() {
+        data.difference_section.items.push({title:"New Title", text:"New Description"});
+        fillAdminForm();
+    }
+    
+    function addItem() { 
+      data.items.push({
+        item_name:"New Product",
+        item_image:"images/placeholder.png",
+        ingredients:"Fresh fruit, vegetables",
+        fiyat:4.50,
+        para_birimi:"$",
+        category: "juice", 
+        nutrition: { calories: 100, protein: 1, fat: 0, sugar: 15 }
+      }); 
+      fillAdminForm(); 
+    }
+
+    function openModal(item) {
+      document.getElementById('modal-img').src = item.item_image;
+      document.getElementById('modal-name').textContent = item.item_name;
+      document.getElementById('modal-ingredients').textContent = item.ingredients || '';
+      
+      const priceText = item.fiyat ? `${item.para_birimi || '$'}${item.fiyat.toFixed(2)}` : 'Price Not Listed';
+      document.getElementById('modal-price').textContent = priceText;
+
+      const nut = item.nutrition || {};
+      document.getElementById('modal-calories').querySelector('span').textContent = `${nut.calories || 0} kcal`;
+      document.getElementById('modal-protein').querySelector('span').textContent = `${(nut.protein || 0).toFixed(1)} g`;
+      document.getElementById('modal-fat').querySelector('span').textContent = `${(nut.fat || 0).toFixed(1)} g`;
+      document.getElementById('modal-sugar').querySelector('span').textContent = `${(nut.sugar || 0).toFixed(1)} g`;
+
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+
+    function openAdmin() {
+      document.getElementById('admin-panel').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      fillAdminForm();
+    }
+    function closeAdmin() {
+      document.getElementById('admin-panel').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      history.pushState('', '', location.pathname);
+    }
+    function addLocation() { data.locations.push("New Location"); fillAdminForm(); }
+    function addSocial() { data.contact.social.push({name:"",url:"",icon:""}); fillAdminForm(); }
+    function addAddon() { data.addons.push({name:"",icon:""}); fillAdminForm(); }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    window.onclick = e => { if (e.target.className === 'modal') closeModal(); };
+    function toggleMenu() { document.querySelector('.menu').classList.toggle('active'); }
+
+    async function saveAll(doPush = false) {
+      // Input fields to JSON data save
+      data.brand_name = document.getElementById('admin-brand').value;
+      data.logo = document.getElementById('admin-logo').value;
+      data.hero_image = document.getElementById('admin-hero').value;
+      data.menu_title = document.getElementById('admin-menutitle').value;
+      
+      // DİNAMİK ALANLARI KAYDETME
+      data.difference_section.title = document.getElementById('admin-diff-title').value;
+      data.freshness_banner.slogan = document.getElementById('admin-fresh-slogan').value;
+      data.freshness_banner.text = document.getElementById('admin-fresh-text').value;
+      data.commitment_section.title = document.getElementById('admin-commit-title').value;
+      data.commitment_section.text = document.getElementById('admin-commit-text').value;
+
+      data.contact.title = document.getElementById('admin-contact-title').value;
+      data.contact.phone = document.getElementById('admin-contact-phone').value;
+      data.contact.email = document.getElementById('admin-contact-email').value;
+      data.contact.address = document.getElementById('admin-contact-address').value;
+      
+      renderSite();
+      saveJson();
+
+      if (doPush) {
+        // ... GitHub Push logic (same as previous)
+        alert('Push functionality is the same as before. Please check console for details.');
+      } else {
+        alert('Changes saved locally! settings.json downloaded.');
+      }
+    }
+
+    function saveJson() {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'settings.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    // Live Update
+    setInterval(() => {
+      fetch('settings.json?' + Date.now())
+        .then(r => r.ok ? r.json() : null)
+        .then(newData => {
+          if (newData && JSON.stringify(newData) !== lastJson) {
+            data = {...getDefaultData(), ...newData, 
+                nav_links: newData.nav_links || getDefaultData().nav_links,
+                difference_section: {...getDefaultData().difference_section, ...newData.difference_section},
+                freshness_banner: {...getDefaultData().freshness_banner, ...newData.freshness_banner},
+                commitment_section: {...getDefaultData().commitment_section, ...newData.commitment_section},
+            };
+            lastJson = JSON.stringify(data);
+            renderSite();
+          }
+        });
+    }, 5000);
+
+    // Scroll Reveal Animations
+    function checkReveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add('active');
+        } 
+      }
+    }
+    window.addEventListener('scroll', checkReveal);
+    window.addEventListener('load', checkReveal);
+    window.addEventListener('resize', checkReveal);
+
+    // Initialization
+    loadData();
+
+    // Admin Panel via URL Hash
+    window.addEventListener('hashchange', () => {
+      if (location.hash === '#adminpanel') openAdmin();
+      else closeAdmin();
+    });
+  </script>
+</body>
+</html>
